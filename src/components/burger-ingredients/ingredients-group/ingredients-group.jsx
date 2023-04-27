@@ -2,7 +2,6 @@ import React from 'react';
 import styles from "./ingredients-group.module.sass"
 import IngredientsItem from "./ingredients-item/ingredients-item";
 import PropTypes from "prop-types";
-import {ingredientsProtoTypes} from "../../../utils/types"
 
 
 function IngredientsGroup(props) {
@@ -20,10 +19,10 @@ function IngredientsGroup(props) {
   );
 }
 
-IngredientsGroup.prototype = {
-  type: ingredientsProtoTypes,
+IngredientsGroup.propTypes = {
+  type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  data: ingredientsProtoTypes,
+  data: PropTypes.array.isRequired,
 }
 
 export default IngredientsGroup;

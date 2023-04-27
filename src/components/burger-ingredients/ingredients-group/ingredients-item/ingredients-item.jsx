@@ -27,7 +27,7 @@ function IngredientsItem(props) {
   );
 }
 
-IngredientsItem.prototype = {
+IngredientsItem.propTypes = {
   data: ingredientsProtoTypes,
 }
 

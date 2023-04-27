@@ -2,6 +2,7 @@ import React from 'react';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./constructor-item.module.sass"
 import { ingredientsProtoTypes } from "../../../../utils/types";
+import PropTypes from "prop-types";
 
 
 function ConstructorItem ( props ) {
@@ -20,8 +21,8 @@ export default ConstructorItem;
 
 
 
-ConstructorItem.prototype = {
-  name: ingredientsProtoTypes,
-  price: ingredientsProtoTypes,
-  image: ingredientsProtoTypes,
+ConstructorItem.propsTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
 }

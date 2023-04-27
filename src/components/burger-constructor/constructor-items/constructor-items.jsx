@@ -13,7 +13,7 @@ function ConstructorItems() {
         extraClass={`ml-8 mr-4`}
         type="top"
         isLocked={true}
-        text={data[0].name}
+        text={`${data[0].name} (верх)`}
         price={data[0].price}
         thumbnail={data[0].image}/>
 
@@ -36,7 +36,7 @@ function ConstructorItems() {
         extraClass={`ml-8 mr-4`}
         type="bottom"
         isLocked={true}
-        text={data[0].name}
+        text={`${data[0].name} (низ)`}
         price={data[0].price}
         thumbnail={data[0].image}/>
     </div>
