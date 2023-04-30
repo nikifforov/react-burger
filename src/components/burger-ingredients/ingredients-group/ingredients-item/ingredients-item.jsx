@@ -3,13 +3,22 @@ import styles from "./ingredients-item.module.sass"
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
 // import PropTypes from "prop-types";
 import { ingredientsProtoTypes } from "../../../../utils/types"
+import PropTypes from "prop-types";
 
 function IngredientsItem(props) {
 
-  const { data } = props;
+  const { data, openModal, getIngredientFroModal } = props;
+
+  const handleClick = (id) => {
+    getIngredientFroModal(id);
+    openModal();
+  }
 
   return (
-    <div className={`${styles.ingredientsItem}`}>
+    <div
+      className={`${styles.ingredientsItem}`}
+      onClick={() => handleClick(data._id)}
+    >
       <div className={`mb-1 ${styles.ingredientsItem__img}`}>
         <img src={data.image_large} alt={data.name}/>
       </div>
@@ -29,6 +38,8 @@ function IngredientsItem(props) {
 
 IngredientsItem.propTypes = {
   data: ingredientsProtoTypes,
+  openModal: PropTypes.func.isRequired,
+  getIngredientFroModal: PropTypes.func.isRequired
 }
 
 export default IngredientsItem;
