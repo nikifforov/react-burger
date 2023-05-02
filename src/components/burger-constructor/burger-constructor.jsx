@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useModal } from "../../hooks/useModal";
 import styles from "./burger-constructor.module.sass"
 import ConstructorItems from "./constructor-items/constructor-items";
 import ConstructorTotal from "./constructor-total/constructor-total";
@@ -8,21 +9,19 @@ import { ingredientsProtoTypes } from "../../utils/types";
 import PropTypes from "prop-types";
 
 
+
 function BurgerConstructor({data}) {
   const [ checkout, setCheckout ] = useState(false);
-  const [ modal, setModal ] = useState(false)
-  const handleCheckout = () => {
-    setModal(true)
-    setCheckout(true)
-  }
+  const { isModalOpen, openModal, closeModal } = useModal();
 
-  const closeModal = () => {
-    setModal(false)
+  const handleCheckout = () => {
+    openModal();
+    setCheckout(true);
   }
 
   return (
     <>
-      {checkout && modal &&
+      {checkout && isModalOpen &&
         <Modal
           closeModal={closeModal}
         >

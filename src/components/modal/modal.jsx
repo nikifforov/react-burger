@@ -14,7 +14,7 @@ function Modal ( props ) {
 
   useEffect( () => {
     const handleEsc = (e) => {
-      if ( e.keyCode === 27 ) {
+      if ( e.key === "Escape" ) {
         closeModal();
       }
     };

@@ -6,19 +6,12 @@ import Modal from "../modal/modal";
 import IngredientsDetails from "./ingredients-details/ingredients-details";
 import PropTypes from "prop-types";
 import { ingredientsProtoTypes } from "../../utils/types";
+import { useModal } from "../../hooks/useModal";
 
 
 function BurgerIngredients( { data }) {
-  const [ modal, setModal ] = useState(false)
+  const { isModalOpen, openModal, closeModal } = useModal()
   const [ ingredient, setIngredient ] = useState([])
-
-  const openModal = () => {
-    setModal(true)
-  }
-
-  const closeModal = () => {
-    setModal(false)
-  }
 
   const getIngredientFroModal = (id) => {
     return setIngredient(data.find((item) => item._id === id))
@@ -27,7 +20,7 @@ function BurgerIngredients( { data }) {
   return (
     <>
 
-      {modal &&
+      {isModalOpen &&
         <Modal
         title={"Детали ингредиента"}
         closeModal={closeModal}

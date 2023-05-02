@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from "./ingredients-item.module.sass"
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-// import PropTypes from "prop-types";
 import { ingredientsProtoTypes } from "../../../../utils/types"
 import PropTypes from "prop-types";
 
