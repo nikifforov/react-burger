@@ -1,0 +1,36 @@
+.header
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 100%
+  padding: 16px 0
+  background: #1C1C21
+  box-shadow: 0 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04)
+  & button
+    display: flex
+    align-items: center
+    gap: 8px
+    color: #8585AD
+    & svg
+      fill: #8585AD
+    &.active
+      color: #F2F2F3
+      & svg
+        fill: #F2F2F3
+  &__container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    width: 100%
+    max-width: 1280px
+  &__nav
+    display: flex
+    align-items: center
+    gap: 8px
+    margin-right: 112px
+
+  &__logo
+    width: auto
+    height: 40px
+    margin-right: auto
+  &__lk
