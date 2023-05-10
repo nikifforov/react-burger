@@ -3,6 +3,7 @@ import styles from  "./app.module.sass"
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { BurgerConstructorContext } from "../services/burgerConstructorContext";
 
 const API = "https://norma.nomoreparties.space/api/ingredients";
 function App() {
@@ -39,7 +40,10 @@ function App() {
           <AppHeader/>
           <main className={styles.app__main}>
             <BurgerIngredients data={state}/>
-            <BurgerConstructor data={state}/>
+            <BurgerConstructorContext.Provider value={{state}}>
+              <BurgerConstructor />
+            </BurgerConstructorContext.Provider>
+
           </main>
         </>
       )}
