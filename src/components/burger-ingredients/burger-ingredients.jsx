@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from "./burger-ingredients.module.sass"
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import IngredientsGroup from "./ingredients-group/ingredients-group";
 import Modal from "../modal/modal";
 import IngredientsDetails from "./ingredients-details/ingredients-details";
-import PropTypes from "prop-types";
-import { ingredientsProtoTypes } from "../../utils/types";
 import { useModal } from "../../hooks/useModal";
+import { BurgerContext } from "../../services/burgerContext";
 
 
-function BurgerIngredients( { data }) {
+function BurgerIngredients() {
   const { isModalOpen, openModal, closeModal } = useModal()
   const [ ingredient, setIngredient ] = useState([])
+  const { state } = useContext( BurgerContext );
 
   const getIngredientFroModal = (id) => {
-    return setIngredient(data.find((item) => item._id === id))
+    return setIngredient(state.find((item) => item._id === id))
   }
 
   return (
@@ -37,21 +37,21 @@ function BurgerIngredients( { data }) {
             type={`bun`}
             title={`Булки`}
             openModal={openModal}
-            data={data.filter((e) => e.type === "bun")}
+            data={state.filter((e) => e.type === "bun")}
             getIngredientFroModal={getIngredientFroModal}
           />
           <IngredientsGroup
             type={`sauce`}
             title={`Соусы`}
             openModal={openModal}
-            data={data.filter((e) => e.type === "sauce")}
+            data={state.filter((e) => e.type === "sauce")}
             getIngredientFroModal={getIngredientFroModal}
           />
           <IngredientsGroup
             type={`main`}
             title={`Начинки`}
             openModal={openModal}
-            data={data.filter((e) => e.type === "main")}
+            data={state.filter((e) => e.type === "main")}
             getIngredientFroModal={getIngredientFroModal}
           />
         </div>
@@ -59,13 +59,7 @@ function BurgerIngredients( { data }) {
       </section>
     </>
 
-
-
   );
-}
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientsProtoTypes.isRequired).isRequired
 }
 
 export default BurgerIngredients;

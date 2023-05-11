@@ -5,12 +5,10 @@ import ConstructorItems from "./constructor-items/constructor-items";
 import ConstructorTotal from "./constructor-total/constructor-total";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-// import { ingredientsProtoTypes } from "../../utils/types";
-// import PropTypes from "prop-types";
-import { BurgerConstructorContext } from "../services/burgerConstructorContext";
+import { BurgerContext } from "../../services/burgerContext";
+import { BASE_URL, request } from "../../utils/api"
 
-const totalPriceInitial = { totalPrice: 0 }
-
+const totalPriceInitial = { totalPrice: "" }
 const reducerTotalPrice = (state, action) => {
   switch ( action.type ) {
     case "calculation":
@@ -21,11 +19,10 @@ const reducerTotalPrice = (state, action) => {
 }
 
 
-
 function BurgerConstructor() {
   const [ checkout, setCheckout ] = useState(false);
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { state } = useContext( BurgerConstructorContext );
+  const { state } = useContext( BurgerContext );
   const [ card, setCard ] = useState({
     bun: [],
     ingredients: []
@@ -53,6 +50,10 @@ function BurgerConstructor() {
     setCard({bun: bun, ingredients: main})
   }, [bun, main])
 
+  useEffect(() => {
+    let totalPrice = card.bun.price * 2 + card.ingredients.reduce((acc, val) => acc + val.price, 0);
+    setTotalPrice( { type: "calculation", payload: `${totalPrice}` })
+  }, [card.bun, card.ingredients])
 
   const orderRequest = {
     method: "POST",
@@ -64,21 +65,8 @@ function BurgerConstructor() {
     })
   }
 
-
-  useEffect(() => {
-    let totalPrice = card.bun.price * 2 + card.ingredients.reduce((acc, val) => acc + val.price, 0);
-    setTotalPrice( { type: "calculation", payload: totalPrice })
-  }, [card.bun, card.ingredients])
-
-
   const postOrder = () => {
-    fetch("https://norma.nomoreparties.space/api/orders", orderRequest)
-      .then((res) => {
-        if ( res.ok ) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`)
-      })
+    request(`${BASE_URL}/orders`, orderRequest)
       .then((data) =>
         setOrder({name: data.name, order: data.order, success: data.success}))
       .catch((e) => {
@@ -92,7 +80,6 @@ function BurgerConstructor() {
     openModal();
     setCheckout(true);
   }
-
 
   // useEffect(() => {
   //   console.log(order);
@@ -116,9 +103,5 @@ function BurgerConstructor() {
 
   );
 }
-
-// BurgerConstructor.propTypes = {
-//   state: PropTypes.arrayOf(ingredientsProtoTypes.isRequired).isRequired
-// }
 
 export default BurgerConstructor;

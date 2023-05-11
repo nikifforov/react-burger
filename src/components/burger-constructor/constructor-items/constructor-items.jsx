@@ -3,7 +3,6 @@ import styles from "./constructor-items.module.sass"
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components"
 import ConstructorItem from "./constructor-item/constructor-item";
 import PropTypes from "prop-types";
-// import { ingredientsProtoTypes } from "../../../utils/types";
 
 function ConstructorItems( { card } ) {
 
