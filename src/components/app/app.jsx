@@ -1,39 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from  "./app.module.sass"
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { BurgerContext } from "../../services/burgerContext";
-import { BASE_URL, request } from "../../utils/api"
+import { useDispatch, useSelector } from "react-redux";
+import { getBurgerIngredients } from "../../services/actions/get-burger-ingredients-actions";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend"
 
 function App() {
-  const [ loaded, setLoaded ] = useState(false)
-  const [ state, setState ] = useState([])
+  const dispatch = useDispatch();
+  const isLoading  = useSelector(store => store.burgerIngredients.isLoading);
 
-  useEffect(() => {
-    request(`${BASE_URL}/ingredients`)
-      .then((data) => {
-        setState(data.data)
-        setLoaded(true)
-      })
-      .catch(e => {
-        console.log(e.messages)
-        setLoaded(false)
-      });
-  }, [])
+  useEffect( () => {
+    dispatch(getBurgerIngredients())
+  }, [dispatch] );
+
 
   return (
 
     <>
-      {loaded && (
+      {!isLoading && (
         <>
-        <BurgerContext.Provider value={{state}}>
           <AppHeader/>
           <main className={styles.app__main}>
-            <BurgerIngredients />
-            <BurgerConstructor />
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </DndProvider>
           </main>
-        </BurgerContext.Provider>
         </>
       )}
     </>

@@ -1,59 +1,96 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from "./burger-ingredients.module.sass"
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import IngredientsGroup from "./ingredients-group/ingredients-group";
 import Modal from "../modal/modal";
 import IngredientsDetails from "./ingredients-details/ingredients-details";
 import { useModal } from "../../hooks/useModal";
-import { BurgerContext } from "../../services/burgerContext";
+import { useInView } from "react-intersection-observer";
+import { useSelector } from "react-redux";
 
+export const BUN = "bun";
+export const SAUCE = "sauce";
+export const MAIN = "main";
 
 function BurgerIngredients() {
-  const { isModalOpen, openModal, closeModal } = useModal()
-  const [ ingredient, setIngredient ] = useState([])
-  const { state } = useContext( BurgerContext );
+  const { isModalOpen, openModal, closeModalDetails } = useModal()
+  const [currentTab, setCurrentTab] = useState(BUN);
 
-  const getIngredientFroModal = (id) => {
-    return setIngredient(state.find((item) => item._id === id))
-  }
+  const ingredients  = useSelector(store => store.burgerIngredients.ingredients);
+  const ingredientForModal = useSelector(store => store.ingredientDetails.ingredient);
+
+  const ingredientsTabSection = useRef();
+
+
+  const [refBun, inViewBun] = useInView({
+    threshold: 0,
+    root: ingredientsTabSection.currentTab,
+  });
+
+  const [refSauce, inViewSauce] = useInView({
+    threshold: 0.25,
+    rootMargin: "-300px",
+    root: ingredientsTabSection.currentTab,
+  });
+
+  const [refMain, inViewMain] = useInView({
+    threshold: 0.25,
+    root: ingredientsTabSection.currentTab,
+  });
+
+  useEffect(() => {
+    if (inViewBun) {
+      setCurrentTab(BUN);
+    }
+    if (inViewSauce) {
+      setCurrentTab(SAUCE);
+    }
+    if (inViewMain) {
+      setCurrentTab(MAIN);
+    }
+  }, [inViewBun, inViewSauce, inViewMain]);
+
 
   return (
     <>
 
-      {isModalOpen &&
+      {isModalOpen && ingredientForModal !== null &&
         <Modal
         title={"Детали ингредиента"}
-        closeModal={closeModal}
+        closeModal={closeModalDetails}
         >
-          <IngredientsDetails data={ingredient}/>
+          <IngredientsDetails />
         </Modal>
       }
 
       <section className={`mt-10 ${styles.burgerIngredients}`}>
         <p className={`mt-5 text text_type_main-large`}>Соберите бургер</p>
-        <IngredientsTabs/>
-        <div className={`mt-10 custom-scroll ${styles.burgerIngredients__groups}`}>
-          <IngredientsGroup
-            type={`bun`}
-            title={`Булки`}
-            openModal={openModal}
-            data={state.filter((e) => e.type === "bun")}
-            getIngredientFroModal={getIngredientFroModal}
-          />
-          <IngredientsGroup
-            type={`sauce`}
-            title={`Соусы`}
-            openModal={openModal}
-            data={state.filter((e) => e.type === "sauce")}
-            getIngredientFroModal={getIngredientFroModal}
-          />
-          <IngredientsGroup
-            type={`main`}
-            title={`Начинки`}
-            openModal={openModal}
-            data={state.filter((e) => e.type === "main")}
-            getIngredientFroModal={getIngredientFroModal}
-          />
+        <IngredientsTabs currentTab={currentTab} setCurrentTab={setCurrentTab}/>
+        <div className={`mt-10 custom-scroll ${styles.burgerIngredients__groups}`} ref={ingredientsTabSection}>
+          <div ref={refBun}>
+            <IngredientsGroup
+              type={BUN}
+              title={`Булки`}
+              openModal={openModal}
+              data={ingredients.filter((e) => e.type === "bun")}
+            />
+          </div>
+          <div ref={refSauce}>
+            <IngredientsGroup
+              type={SAUCE}
+              title={`Соусы`}
+              openModal={openModal}
+              data={ingredients.filter((e) => e.type === "sauce")}
+            />
+          </div>
+          <div ref={refMain}>
+            <IngredientsGroup
+              type={MAIN}
+              title={`Начинки`}
+              openModal={openModal}
+              data={ingredients.filter((e) => e.type === "main")}
+            />
+          </div>
         </div>
 
       </section>
