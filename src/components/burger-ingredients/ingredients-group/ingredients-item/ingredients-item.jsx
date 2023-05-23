@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd"
 import { addIngredientDetails } from "../../../../services/actions/ingredient-details-actions";
+import { BUN } from "../../../../utils/constants";
 
 function IngredientsItem(props) {
   const { ingredient, openModal } = props;
@@ -39,7 +40,7 @@ function IngredientsItem(props) {
 
   }, [burgerConstructor, ingredient._id]);
 
-  const count = ingredient.type === "bun" ? countBun : countIngredient;
+  const count = ingredient.type === BUN ? countBun : countIngredient;
 
 
   return (

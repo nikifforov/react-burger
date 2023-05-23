@@ -8,6 +8,8 @@ import {
 const initialState = {
   isLoading: false,
   order: null,
+  orderSuccess: null,
+  orderName: null,
   hasError: false
 };
 
@@ -23,7 +25,9 @@ export const orderDetailsReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        order: action.payload
+        order: action.payload.order,
+        orderSuccess: action.payload.success,
+        orderName: action.payload.name
       }
     }
     case ORDER_DETAILS_FAILED: {
@@ -38,7 +42,9 @@ export const orderDetailsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         order: null,
-        hasError: false
+        hasError: false,
+        orderSuccess: null,
+        orderName: null
       }
     }
     default: {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from 'react';
+import { useMemo } from 'react';
 import { useModal } from "../../hooks/useModal";
 import styles from "./burger-constructor.module.sass"
 import ConstructorItems from "./constructor-items/constructor-items";
@@ -6,22 +6,11 @@ import ConstructorTotal from "./constructor-total/constructor-total";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { orderCheckout } from "../../services/actions/order-details-actions"
-
-const totalPriceInitial = { totalPrice: "" }
-const reducerTotalPrice = (state, action) => {
-  switch ( action.type ) {
-    case "calculation":
-      return {totalPrice: action.payload}
-    default:
-      return totalPriceInitial
-  }
-}
-
+import { orderCheckout, orderClear } from "../../services/actions/order-details-actions";
 
 function BurgerConstructor() {
-  const { isModalOpen, openModal, closeModalOrder } = useModal();
-  const [ totalPrice, setTotalPrice ] = useReducer( reducerTotalPrice, totalPriceInitial, undefined);
+  const dispatch = useDispatch();
+  const { openModal, closeModalOrder } = useModal(() => dispatch(orderClear()));
   const burgerConstructor = useSelector(store => store.burgerConstructor)
 
 
@@ -45,27 +34,26 @@ function BurgerConstructor() {
   const orderDetails = useSelector(store => store.orderDetails);
   const postOrder = useDispatch();
 
-
-  useEffect(() => {
-    let totalPrice = 0
+  const totalPrice = useMemo(() => {
+    let price = 0
     if ( burgerConstructor.bun ) {
-      totalPrice += burgerConstructor.bun.price * 2;
+      price += burgerConstructor.bun.price * 2
     }
+
     if ( burgerConstructor.ingredients.length !== 0 ) {
-      totalPrice += burgerConstructor.ingredients.reduce((acc, val) => acc + val.price, 0);
+      price += burgerConstructor.ingredients.reduce((sum, val) => sum + val.price, 0)
     }
-    setTotalPrice( { type: "calculation", payload: `${totalPrice}` })
-  }, [burgerConstructor])
+    return price
+  }, [ burgerConstructor ])
 
   const handleCheckout = () => {
     postOrder(orderCheckout(orderIngredients))
     openModal();
-
   }
 
   return (
     <>
-      {orderDetails.order !== null && orderDetails.order.success && isModalOpen &&
+      {orderDetails.order !== null &&
         <Modal
           closeModal={closeModalOrder}
         >
@@ -75,7 +63,7 @@ function BurgerConstructor() {
 
       <section className={`mt-25 pl-4 ${styles.burgerConstructor}`}>
         <ConstructorItems />
-        <ConstructorTotal totalPrice={totalPrice.totalPrice ? totalPrice.totalPrice : "0"} handleCheckout={handleCheckout} />
+        <ConstructorTotal totalPrice={totalPrice} handleCheckout={handleCheckout} />
       </section>
     </>
 

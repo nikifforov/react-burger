@@ -9,7 +9,8 @@ import {
   burgerConstructorAddBun,
   burgerConstructorAddIngredient
 } from "../../../services/actions/burget-constructor-actions";
-// import PropTypes from "prop-types";
+import { BUN } from "../../../utils/constants";
+
 
 function ConstructorItems() {
 
@@ -19,7 +20,7 @@ function ConstructorItems() {
   const [{isHover} , dropTargetRef ] = useDrop({
     accept: "ingredient",
     drop(ingredient) {
-      ingredient.type === "bun"
+      ingredient.type === BUN
         ? dispatch(burgerConstructorAddBun(ingredient))
         : dispatch(burgerConstructorAddIngredient(ingredient, uuidv4()))
     },
@@ -86,9 +87,5 @@ function ConstructorItems() {
   );
 }
 
-
-// ConstructorItems.propTypes = {
-//   card: PropTypes.object.isRequired,
-// }
 
 export default ConstructorItems;

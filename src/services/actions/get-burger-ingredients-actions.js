@@ -17,8 +17,7 @@ export const getBurgerIngredients = () => {
           payload: res.data,
         })
       })
-      .catch((e) => {
-        console.log(e.messages);
+      .catch(() => {
         dispatch({
           type: GET_BURGER_INGREDIENTS_FAILED
         })

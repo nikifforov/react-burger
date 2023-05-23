@@ -29,7 +29,7 @@ function ConstructorTotal({handleCheckout, totalPrice}) {
 
 ConstructorTotal.propTypes = {
   handleCheckout: PropTypes.func.isRequired,
-  totalPrice: PropTypes.string.isRequired
+  totalPrice: PropTypes.number.isRequired
 }
 
 export default ConstructorTotal;

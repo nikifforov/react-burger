@@ -7,13 +7,12 @@ import IngredientsDetails from "./ingredients-details/ingredients-details";
 import { useModal } from "../../hooks/useModal";
 import { useInView } from "react-intersection-observer";
 import { useSelector } from "react-redux";
+import { BUN, SAUCE, MAIN } from "../../utils/constants"
 
-export const BUN = "bun";
-export const SAUCE = "sauce";
-export const MAIN = "main";
+
 
 function BurgerIngredients() {
-  const { isModalOpen, openModal, closeModalDetails } = useModal()
+  const { openModal, closeModalDetails } = useModal()
   const [currentTab, setCurrentTab] = useState(BUN);
 
   const ingredients  = useSelector(store => store.burgerIngredients.ingredients);
@@ -54,7 +53,7 @@ function BurgerIngredients() {
   return (
     <>
 
-      {isModalOpen && ingredientForModal !== null &&
+      {ingredientForModal !== null &&
         <Modal
         title={"Детали ингредиента"}
         closeModal={closeModalDetails}
@@ -72,7 +71,7 @@ function BurgerIngredients() {
               type={BUN}
               title={`Булки`}
               openModal={openModal}
-              data={ingredients.filter((e) => e.type === "bun")}
+              data={ingredients.filter((e) => e.type === BUN)}
             />
           </div>
           <div ref={refSauce}>
@@ -80,7 +79,7 @@ function BurgerIngredients() {
               type={SAUCE}
               title={`Соусы`}
               openModal={openModal}
-              data={ingredients.filter((e) => e.type === "sauce")}
+              data={ingredients.filter((e) => e.type === SAUCE)}
             />
           </div>
           <div ref={refMain}>
@@ -88,7 +87,7 @@ function BurgerIngredients() {
               type={MAIN}
               title={`Начинки`}
               openModal={openModal}
-              data={ingredients.filter((e) => e.type === "main")}
+              data={ingredients.filter((e) => e.type === MAIN)}
             />
           </div>
         </div>
