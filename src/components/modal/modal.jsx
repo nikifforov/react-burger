@@ -6,7 +6,6 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from  "./modal.module.sass"
 
 
-
 const reactModal = document.querySelector('#react-modal');
 
 function Modal ( props ) {
