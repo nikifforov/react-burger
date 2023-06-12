@@ -1,18 +1,15 @@
 import { useMemo } from 'react';
-import { useModal } from "../../hooks/useModal";
 import styles from "./burger-constructor.module.sass"
 import ConstructorItems from "./constructor-items/constructor-items";
 import ConstructorTotal from "./constructor-total/constructor-total";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { useDispatch, useSelector } from "react-redux";
-import { orderCheckout, orderClear } from "../../services/actions/order-details-actions";
+import { useSelector } from "react-redux";
 
 function BurgerConstructor() {
-  const dispatch = useDispatch();
-  const { openModal, closeModalOrder } = useModal(() => dispatch(orderClear()));
-  const burgerConstructor = useSelector(store => store.burgerConstructor)
 
+  const burgerConstructor = useSelector(store => store.burgerConstructor)
+  const orderDetails = useSelector(store => store.orderDetails);
 
   const orderIngredients = useMemo( () => {
     let orderArr = [];
@@ -31,9 +28,6 @@ function BurgerConstructor() {
   }, [burgerConstructor]);
 
 
-  const orderDetails = useSelector(store => store.orderDetails);
-  const postOrder = useDispatch();
-
   const totalPrice = useMemo(() => {
     let price = 0
     if ( burgerConstructor.bun ) {
@@ -46,24 +40,19 @@ function BurgerConstructor() {
     return price
   }, [ burgerConstructor ])
 
-  const handleCheckout = () => {
-    postOrder(orderCheckout(orderIngredients))
-    openModal();
-  }
+
 
   return (
     <>
       {orderDetails.order !== null &&
-        <Modal
-          closeModal={closeModalOrder}
-        >
+        <Modal>
           <OrderDetails />
         </Modal>
       }
 
       <section className={`mt-25 pl-4 ${styles.burgerConstructor}`}>
         <ConstructorItems />
-        <ConstructorTotal totalPrice={totalPrice} handleCheckout={handleCheckout} />
+        <ConstructorTotal totalPrice={totalPrice} orderIngredients={orderIngredients} />
       </section>
     </>
 

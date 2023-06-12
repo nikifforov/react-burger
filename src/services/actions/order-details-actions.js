@@ -1,4 +1,4 @@
-import { BASE_URL, request} from "../../utils/api";
+import { CHECKOUT_ORDER_URL, request } from "../../utils/api";
 
 export const ORDER_DETAILS_REQUEST = "ORDER_DETAILS_REQUEST";
 export const ORDER_DETAILS_SUCCESS = "ORDER_DETAILS_SUCCESS";
@@ -11,7 +11,7 @@ export const orderCheckout = (order) => {
     dispatch({
       type: ORDER_DETAILS_REQUEST
     })
-    request(`${BASE_URL}/orders`, {
+    request(CHECKOUT_ORDER_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,6 @@ export const orderCheckout = (order) => {
         })
       })
       .catch((e) => {
-        console.log(e.messages);
         dispatch({
           type: ORDER_DETAILS_FAILED
         })

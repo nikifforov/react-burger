@@ -4,18 +4,45 @@ import ModalOverlay from "./modal-overlay/modal-overlay";
 import PropTypes from 'prop-types';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from  "./modal.module.sass"
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { orderClear } from "../../services/actions/order-details-actions";
+import { removeIngredientDetails } from "../../services/actions/ingredient-details-actions";
 
 
 const reactModal = document.querySelector('#react-modal');
 
 function Modal ( props ) {
-  const { title, closeModal, children } = props
+  const { title, children } = props
+
+  const order = useSelector((state) => state.orderDetails.order);
+  const ingredientDetails = useSelector((state) => state.ingredientDetails.ingredient);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const closeModal = () => {
+    if (order !== null) {
+      dispatch(orderClear());
+    }
+    if ( ingredientDetails !== null ) {
+      dispatch(removeIngredientDetails())
+    }
+    navigate("/", { replace: true });
+  };
+
+
 
   useEffect( () => {
     const handleEsc = (e) => {
       if ( e.key === "Escape" ) {
-        closeModal();
+        if (order !== null) {
+          dispatch( orderClear() )
+        }
+        if ( ingredientDetails !== null ) {
+          dispatch(removeIngredientDetails())
+        }
       }
+      navigate("/", { replace: true });
     };
     document.addEventListener("keydown", handleEsc);
 
@@ -23,7 +50,7 @@ function Modal ( props ) {
       document.removeEventListener("keydown", handleEsc);
     };
 
-  }, [ closeModal ] );
+  }, [ dispatch, navigate, order, ingredientDetails ] );
 
 
   return createPortal(
@@ -39,7 +66,7 @@ function Modal ( props ) {
           <>{children}</>
         </div>
       </div>
-      <ModalOverlay closeModal={closeModal}/>
+      <ModalOverlay/>
     </>,
     reactModal
   );
@@ -47,7 +74,6 @@ function Modal ( props ) {
 
 Modal.propTypes = {
   title: PropTypes.string,
-  closeModal: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
 };
 

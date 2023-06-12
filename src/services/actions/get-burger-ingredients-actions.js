@@ -1,4 +1,4 @@
-import { request, BASE_URL } from "../../utils/api"
+import { request, GET_INGREDIENTS_URL } from "../../utils/api";
 
 export const GET_BURGER_INGREDIENTS_REQUEST = "GET_BURGER_INGREDIENTS_REQUEST";
 export const GET_BURGER_INGREDIENTS_SUCCESS = "GET_BURGER_INGREDIENTS_SUCCESS";
@@ -10,7 +10,7 @@ export const getBurgerIngredients = () => {
     dispatch({
       type: GET_BURGER_INGREDIENTS_REQUEST
     });
-    request(`${BASE_URL}/ingredients`)
+    request(GET_INGREDIENTS_URL)
       .then((res) => {
         dispatch({
           type: GET_BURGER_INGREDIENTS_SUCCESS,

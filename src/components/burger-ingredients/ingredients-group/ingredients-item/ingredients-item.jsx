@@ -2,20 +2,20 @@ import React, {useMemo} from 'react';
 import styles from "./ingredients-item.module.sass"
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
 import { ingredientsProtoTypes } from "../../../../utils/types"
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd"
 import { addIngredientDetails } from "../../../../services/actions/ingredient-details-actions";
 import { BUN } from "../../../../utils/constants";
+import { Link, useLocation } from "react-router-dom";
 
-function IngredientsItem(props) {
-  const { ingredient, openModal } = props;
+function IngredientsItem({ ingredient }) {
   const dispatch = useDispatch();
   const burgerConstructor = useSelector(store => store.burgerConstructor)
 
-  const handleClick = () => {
+  const location = useLocation();
+
+  const handleClick = (ingredient) => {
     dispatch(addIngredientDetails(ingredient));
-    openModal();
   }
 
   const [{isDrag}, dragRef] = useDrag({
@@ -44,10 +44,13 @@ function IngredientsItem(props) {
 
 
   return (
-      <div
+
+      <Link
+        to={`/ingredients/${ingredient._id}`}
         className={`${styles.ingredientsItem}`}
-        onClick={handleClick}
+        onClick={() => handleClick(ingredient)}
         ref={dragRef}
+        state={{ backgroundLocation: location }}
       >
         <div className={`mb-1 ${styles.ingredientsItem__img}`}>
           <img src={ingredient.image_large} alt={ingredient.name}/>
@@ -65,7 +68,8 @@ function IngredientsItem(props) {
 
           </div>
         </div>
-      </div>
+      </Link>
+
   );
 
 
@@ -73,7 +77,6 @@ function IngredientsItem(props) {
 
 IngredientsItem.propTypes = {
   ingredient: ingredientsProtoTypes.isRequired,
-  openModal: PropTypes.func.isRequired,
 }
 
 export default IngredientsItem;

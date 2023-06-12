@@ -2,12 +2,29 @@ import React from 'react';
 import styles from "./constructor-total.module.sass"
 import { Button, CurrencyIcon } from  "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { orderCheckout } from "../../../services/actions/order-details-actions";
+import { useNavigate } from "react-router-dom";
+import { burgerConstructorAllClear } from "../../../services/actions/burget-constructor-actions";
 
 
-function ConstructorTotal({handleCheckout, totalPrice}) {
+function ConstructorTotal({ orderIngredients, totalPrice}) {
 
   const { bun, ingredients } = useSelector(store => store.burgerConstructor);
+  const { user } = useSelector(store => store.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    if ( user !== null ) {
+      dispatch(orderCheckout(orderIngredients))
+      dispatch(burgerConstructorAllClear())
+    } else {
+      navigate("/login", {replace: true})
+    }
+  }
+
 
   return (
     <div className={`${styles.constructorTotal}`}>
@@ -28,7 +45,7 @@ function ConstructorTotal({handleCheckout, totalPrice}) {
 
 
 ConstructorTotal.propTypes = {
-  handleCheckout: PropTypes.func.isRequired,
+  orderIngredients: PropTypes.array.isRequired,
   totalPrice: PropTypes.number.isRequired
 }
 
