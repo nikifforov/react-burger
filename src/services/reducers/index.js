@@ -4,7 +4,6 @@ import { orderDetailsReducer } from "./order-details-reducer";
 import { ingredientDetailsReducer } from "./ingredient-details-reducer";
 import { burgerConstructorReducer } from "./burger-constructor-reducer";
 import { authRegistrationReducer } from "./auth-reducer";
-import { modalReducer }  from "./modal-reducer";
 
 
 export const rootReducer = combineReducers({
@@ -12,7 +11,5 @@ export const rootReducer = combineReducers({
   burgerConstructor: burgerConstructorReducer,
   ingredientDetails: ingredientDetailsReducer,
   orderDetails: orderDetailsReducer,
-  modal: modalReducer,
   auth: authRegistrationReducer,
-
 })
