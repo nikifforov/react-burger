@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import styles from "./ingredients-details.module.sass"
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import ConstructorTotal from "../../burger-constructor/constructor-total/constructor-total";
 import { ingredientsProtoTypes } from "../../../utils/types";
 
 

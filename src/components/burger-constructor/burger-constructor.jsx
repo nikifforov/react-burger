@@ -4,9 +4,13 @@ import ConstructorItems from "./constructor-items/constructor-items";
 import ConstructorTotal from "./constructor-total/constructor-total";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { orderClear } from "../../services/actions/order-details-actions";
+import Preloader from "../preloader/preloader";
 
 function BurgerConstructor() {
+
+  const dispatch = useDispatch();
 
   const burgerConstructor = useSelector(store => store.burgerConstructor)
   const orderDetails = useSelector(store => store.orderDetails);
@@ -40,12 +44,19 @@ function BurgerConstructor() {
     return price
   }, [ burgerConstructor ])
 
+  const closeModal = () => {
+    dispatch(orderClear());
+  };
+
+  console.log(typeof closeModal);
 
 
   return (
     <>
+      {orderDetails.isLoading && <Preloader/>}
+
       {orderDetails.order !== null &&
-        <Modal>
+        <Modal closeModal={closeModal}>
           <OrderDetails />
         </Modal>
       }

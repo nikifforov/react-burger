@@ -28,9 +28,11 @@ function AppHeader() {
             <span className={`text text_type_main-default`}>Лента заказов</span>
           </NavLink>
         </nav>
-        <div className={styles.header__logo}>
+        <NavLink
+          to="/"
+          className={styles.header__logo}>
           <Logo/>
-        </div>
+        </NavLink>
         <div className={styles.header__lk}>
           <NavLink to="/profile"
              className={({ isActive }) =>

@@ -18,6 +18,7 @@ import Modal from "../modal/modal";
 import Ingredients from "../../pages/ingredients/ingredients";
 import ProfileOrderHistory from "../profile-order-history/profile-order-history"
 import OrderFeed from "../../pages/order-feed/order-feed";
+import { removeIngredientDetails } from "../../services/actions/ingredient-details-actions";
 
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
     dispatch(getBurgerIngredients())
     dispatch(checkUserAuth())
   }, [dispatch] );
+
+  const closeModalIngredient = () => {
+    dispatch(removeIngredientDetails())
+  }
 
   const location = useLocation();
   const state = location.state?.backgroundLocation;
@@ -104,7 +109,7 @@ function App() {
           <Route
             path="/ingredients/:id"
             element={
-              <Modal title={"Детали ингредиента"}>
+              <Modal title={"Детали ингредиента"} closeModal={closeModalIngredient}>
                 <IngredientsDetails ingredients={ingredients} isLoading={isLoading}/>
               </Modal>
             }
