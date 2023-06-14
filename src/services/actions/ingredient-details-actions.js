@@ -22,7 +22,7 @@ export const removeIngredientDetails = () => {
       type: INGREDIENT_DETAILS_REQUEST
     });
     dispatch({
-      type: INGREDIENT_DETAILS_REMOVE
+      type: INGREDIENT_DETAILS_REMOVE,
     });
   };
 };

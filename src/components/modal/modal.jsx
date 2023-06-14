@@ -9,7 +9,8 @@ import styles from  "./modal.module.sass"
 const reactModal = document.querySelector('#react-modal');
 
 function Modal ( props ) {
-  const { title, closeModal, children } = props
+  const { title, children, closeModal } = props
+
 
   useEffect( () => {
     const handleEsc = (e) => {
@@ -47,8 +48,8 @@ function Modal ( props ) {
 
 Modal.propTypes = {
   title: PropTypes.string,
-  closeModal: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 export default Modal;

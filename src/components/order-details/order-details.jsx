@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from "./order-details.module.sass"
 import doneImg from "../../images/done.png";
-// import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
 
@@ -19,9 +18,5 @@ function OrderDetails () {
     </div>
   );
 }
-
-// OrderDetails.propTypes = {
-//   orderId: PropTypes.number.isRequired,
-// }
 
 export default OrderDetails;
