@@ -4,7 +4,6 @@ import ModalOverlay from "./modal-overlay/modal-overlay";
 import PropTypes from 'prop-types';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from  "./modal.module.sass"
-import { useNavigate } from "react-router-dom";
 
 
 const reactModal = document.querySelector('#react-modal');
@@ -12,20 +11,12 @@ const reactModal = document.querySelector('#react-modal');
 function Modal ( props ) {
   const { title, children, closeModal } = props
 
-  const navigate = useNavigate();
-
-  const handleCloseModal = () => {
-    closeModal();
-    //navigate("/", { replace: true });
-  };
-
 
   useEffect( () => {
     const handleEsc = (e) => {
       if ( e.key === "Escape" ) {
         closeModal();
       }
-      //navigate("/", { replace: true });
     };
     document.addEventListener("keydown", handleEsc);
 
@@ -40,7 +31,7 @@ function Modal ( props ) {
     <>
       <div className={`pt-10 pb-15 pr-10 pl-10 ${styles.modal}`}>
         <div className={styles.modal__container}>
-          <button className={styles.modal__button} onClick={handleCloseModal}>
+          <button className={styles.modal__button} onClick={closeModal}>
             <CloseIcon type="primary"/>
           </button>
           { title &&
