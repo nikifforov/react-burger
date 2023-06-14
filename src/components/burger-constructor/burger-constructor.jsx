@@ -7,11 +7,12 @@ import OrderDetails from "../order-details/order-details";
 import { useSelector, useDispatch } from "react-redux";
 import { orderClear } from "../../services/actions/order-details-actions";
 import Preloader from "../preloader/preloader";
+import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const burgerConstructor = useSelector(store => store.burgerConstructor)
   const orderDetails = useSelector(store => store.orderDetails);
 
@@ -46,9 +47,8 @@ function BurgerConstructor() {
 
   const closeModal = () => {
     dispatch(orderClear());
+    navigate("/", { replace: true });
   };
-
-  console.log(typeof closeModal);
 
 
   return (

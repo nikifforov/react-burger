@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import { useDispatch, useSelector } from "react-redux";
 import { getBurgerIngredients } from "../../services/actions/get-burger-ingredients-actions";
@@ -27,6 +27,7 @@ function App() {
   const ingredients  = useSelector(store => store.burgerIngredients.ingredients);
   // const auth  = useSelector(store => store.auth);
   // console.log(auth);
+  const navigate = useNavigate();
 
   useEffect( () => {
     dispatch(getBurgerIngredients())
@@ -35,6 +36,7 @@ function App() {
 
   const closeModalIngredient = () => {
     dispatch(removeIngredientDetails())
+    navigate("/", { replace: true });
   }
 
   const location = useLocation();

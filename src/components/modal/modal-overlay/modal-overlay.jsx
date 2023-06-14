@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 
 function ModalOverlay ({ closeModal }) {
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const handleClick = (e) => {
     if ( e.target === e.currentTarget ) {
       closeModal();
-      navigate("/", { replace: true });
+      //navigate("/", { replace: true });
     }
   }
 

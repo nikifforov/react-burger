@@ -16,7 +16,7 @@ function Modal ( props ) {
 
   const handleCloseModal = () => {
     closeModal();
-    navigate("/", { replace: true });
+    //navigate("/", { replace: true });
   };
 
 
@@ -25,7 +25,7 @@ function Modal ( props ) {
       if ( e.key === "Escape" ) {
         closeModal();
       }
-      navigate("/", { replace: true });
+      //navigate("/", { replace: true });
     };
     document.addEventListener("keydown", handleEsc);
 
@@ -33,7 +33,7 @@ function Modal ( props ) {
       document.removeEventListener("keydown", handleEsc);
     };
 
-  }, [ navigate, closeModal ] );
+  }, [ closeModal ] );
 
 
   return createPortal(
