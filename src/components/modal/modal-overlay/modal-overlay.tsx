@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import styles from  "./modal-overlay.module.sass"
 import PropTypes from 'prop-types';
 
-function ModalOverlay ({ closeModal }) {
+interface IModalOverlay {
+  closeModal: () => void
+}
 
-  const handleClick = (e) => {
+function ModalOverlay (props: IModalOverlay) {
+
+  const { closeModal } = props;
+
+  const handleClick = (e: SyntheticEvent) => {
     if ( e.target === e.currentTarget ) {
       closeModal();
     }

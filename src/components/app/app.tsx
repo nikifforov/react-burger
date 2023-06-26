@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
-import { useDispatch, useSelector } from "react-redux";
 import { getBurgerIngredients } from "../../services/actions/get-burger-ingredients-actions";
 import Main from "../../pages/main/main";
 import Login from "../../pages/login/login";
@@ -19,14 +18,14 @@ import Ingredients from "../../pages/ingredients/ingredients";
 import ProfileOrderHistory from "../profile-order-history/profile-order-history"
 import OrderFeed from "../../pages/order-feed/order-feed";
 import { removeIngredientDetails } from "../../services/actions/ingredient-details-actions";
+import {IIngredients} from "../../utils/types";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 
 function App() {
-  const dispatch = useDispatch();
-  const isLoading  = useSelector(store => store.burgerIngredients.isLoading);
-  const ingredients  = useSelector(store => store.burgerIngredients.ingredients);
-  // const auth  = useSelector(store => store.auth);
-  // console.log(auth);
+  const dispatch = useAppDispatch();
+  const isLoading  = useAppSelector(store => store.burgerIngredients.isLoading);
+  const ingredients: IIngredients[]  = useAppSelector(store => store.burgerIngredients.ingredients);
   const navigate = useNavigate();
 
   useEffect( () => {

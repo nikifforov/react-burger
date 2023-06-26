@@ -1,15 +1,15 @@
-import { useState, useCallback } from 'react';
+import { useCallback, FormEvent } from 'react';
 import styles from "./register.module.sass";
 import { Button, EmailInput, Input,PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { sendRegistration } from "../../services/actions/auth-actions";
 import useCustomForm  from "../../hooks/useCustomForm"
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 const Register = () => {
 
-  const authError =  useSelector((store) => store.auth.hasError)
-  const dispatch = useDispatch();
+  const authError =  useAppSelector((store) => store.auth.hasError)
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { values, handleChange } = useCustomForm({
@@ -19,7 +19,7 @@ const Register = () => {
   });
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch(sendRegistration(values));
       if (!authError) {

@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import styles from "./profile.module.sass";
 import { NavLink, Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { sendLogout } from "../../services/actions/auth-actions";
+import {useAppDispatch} from "../../hooks/hooks";
 
 
 
 function Profile () {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-const handleLogout = (e) => {
+const handleLogout = (e: SyntheticEvent) => {
   e.preventDefault();
   dispatch(sendLogout())
 }

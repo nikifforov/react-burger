@@ -1,31 +1,48 @@
 import React, { useRef } from 'react';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./constructor-item.module.sass"
-import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-import { ingredientsProtoTypes } from "../../../../utils/types"
+import { IIngredients } from "../../../../utils/types"
 import {
   burgerConstructorRemoveIngredient,
   burgerConstructorSortIngredient
 } from "../../../../services/actions/burget-constructor-actions";
+import {useAppDispatch} from "../../../../hooks/hooks";
 
 
-function ConstructorItem ( { ingredient, index, id } ) {
+interface IConstructorItem {
+  ingredient: IIngredients;
+  index: number;
+  id: string;
+}
 
-  const dispatch = useDispatch();
+interface IConstructorItemDrop {
+  id: string;
+  index: number;
+}
 
-  const handleRemoveIngredient = (ingredientIndex) => {
+interface IConstructorItemDrag {
+  isDragging: boolean;
+}
+
+
+function ConstructorItem ( props: IConstructorItem ) {
+
+  const { ingredient, index, id } = props;
+
+  const dispatch = useAppDispatch();
+
+  const handleRemoveIngredient = (ingredientIndex: number) => {
     dispatch(burgerConstructorRemoveIngredient(ingredientIndex))
   }
 
-  const handleSortBurgerIngredients = ( dragIngredient, hoverIngredient ) => {
+  const handleSortBurgerIngredients = ( dragIngredient: number, hoverIngredient: number) => {
     dispatch(burgerConstructorSortIngredient( dragIngredient, hoverIngredient ))
   }
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const [ { isDragging }, drag ] = useDrag({
+  const [ { isDragging }, drag ] = useDrag<IConstructorItemDrop, unknown, IConstructorItemDrag>({
     type: "item",
     item: () => {
       return { id, index }
@@ -36,9 +53,13 @@ function ConstructorItem ( { ingredient, index, id } ) {
     }),
   })
 
-  const [ , drop ] = useDrop({
+  const [ , drop ] = useDrop<IConstructorItemDrop>({
     accept: "item",
     hover: (item, monitor) => {
+      if (!ref.current) {
+        return;
+      }
+
       const dragIngredient = item.index;
       const hoverIngredient = index;
 
@@ -49,6 +70,9 @@ function ConstructorItem ( { ingredient, index, id } ) {
       const getHoverMiddleY =
         (getHoverBoundingRect.bottom - getHoverBoundingRect.top) / 2;
       const getClientOffset = monitor.getClientOffset();
+      if (!getClientOffset) {
+        return;
+      }
       const getHoverClientY = getClientOffset.y - getHoverBoundingRect.top;
       if (dragIngredient < hoverIngredient && getHoverClientY < getHoverMiddleY) {
         return;
@@ -85,11 +109,3 @@ function ConstructorItem ( { ingredient, index, id } ) {
 }
 
 export default ConstructorItem;
-
-
-
-ConstructorItem.propTypes = {
-  ingredient: ingredientsProtoTypes.isRequired,
-  index: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired
-}

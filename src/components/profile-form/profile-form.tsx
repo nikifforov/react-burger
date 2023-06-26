@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import styles from "./profile-form.module.sass";
 import { EmailInput, Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { updateUserAction } from "../../services/actions/auth-actions";
 import useCustomForm  from "../../hooks/useCustomForm";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 
 function ProfileForm () {
 
-  const { user } = useSelector(store => store.auth);
-  const dispatch = useDispatch();
+  const { user } = useAppSelector(store => store.auth);
+  const dispatch = useAppDispatch();
 
   const defaultValues = {
     name: user.name,
@@ -23,13 +23,13 @@ function ProfileForm () {
     password: "**********"
   });
 
-  const handleReset = (e) => {
+  const handleReset = (e: SyntheticEvent) => {
     e.preventDefault();
     setValues(defaultValues);
   };
 
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(updateUserAction(values))
   }
@@ -48,7 +48,9 @@ function ProfileForm () {
         onChange={handleChange}
         value={values.email}
         name={'email'}
-        icon={'EditIcon'}
+        placeholder={"Логин"}
+        isIcon={true}
+
       />
       <PasswordInput
         onChange={handleChange}

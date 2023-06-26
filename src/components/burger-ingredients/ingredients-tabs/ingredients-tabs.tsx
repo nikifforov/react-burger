@@ -3,12 +3,17 @@ import styles from "./ingredients-tabs.module.sass";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BUN, SAUCE, MAIN } from "../../../utils/constants";
 
-function IngredientsTabs(props) {
+interface IIngredientsTabs {
+  currentTab: string;
+  setCurrentTab: (e: string) => void;
+}
+
+function IngredientsTabs(props: IIngredientsTabs) {
   const { currentTab, setCurrentTab } = props;
 
-  const handleScroll = (e) => {
+  const handleScroll = (e: string) => {
     setCurrentTab(e)
-    const el = document.querySelector("#" + e);
+    const el = document.querySelector("#" + e) as HTMLDivElement;
     el.scrollIntoView({behavior: "smooth"})
   }
 

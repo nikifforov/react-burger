@@ -4,26 +4,29 @@ import ConstructorItems from "./constructor-items/constructor-items";
 import ConstructorTotal from "./constructor-total/constructor-total";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { useSelector, useDispatch } from "react-redux";
 import { orderClear } from "../../services/actions/order-details-actions";
 import Preloader from "../preloader/preloader";
 import { useNavigate } from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 function BurgerConstructor() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const burgerConstructor = useSelector(store => store.burgerConstructor)
-  const orderDetails = useSelector(store => store.orderDetails);
+  const burgerConstructor = useAppSelector(store => store.burgerConstructor)
+  const orderDetails = useAppSelector(store => store.orderDetails);
 
   const orderIngredients = useMemo( () => {
     let orderArr = [];
 
+    //@ts-ignore
     if ( burgerConstructor.bun ) {
+      //@ts-ignore
       orderArr.push(burgerConstructor.bun._id)
     }
-
+    //@ts-ignore
     if ( burgerConstructor.ingredients.length !== 0 ) {
+      //@ts-ignore
       burgerConstructor.ingredients.forEach((item) => {
         orderArr.push(item._id)
       })
@@ -35,11 +38,15 @@ function BurgerConstructor() {
 
   const totalPrice = useMemo(() => {
     let price = 0
+    //@ts-ignore
     if ( burgerConstructor.bun ) {
+      //@ts-ignore
       price += burgerConstructor.bun.price * 2
     }
 
+    //@ts-ignore
     if ( burgerConstructor.ingredients.length !== 0 ) {
+      //@ts-ignore
       price += burgerConstructor.ingredients.reduce((sum, val) => sum + val.price, 0)
     }
     return price

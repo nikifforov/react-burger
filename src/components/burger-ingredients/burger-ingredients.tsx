@@ -3,33 +3,34 @@ import styles from "./burger-ingredients.module.sass"
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import IngredientsGroup from "./ingredients-group/ingredients-group";
 import { useInView } from "react-intersection-observer";
-import { useSelector } from "react-redux";
 import { BUN, SAUCE, MAIN } from "../../utils/constants"
+import {useAppSelector} from "../../hooks/hooks";
+import {IIngredients} from "../../utils/types";
 
 
 
 function BurgerIngredients() {
-  const [currentTab, setCurrentTab] = useState(BUN);
+  const [currentTab, setCurrentTab] = useState<string>(BUN);
 
-  const ingredients  = useSelector(store => store.burgerIngredients.ingredients);
+  const ingredients: IIngredients[]  = useAppSelector(store => store.burgerIngredients.ingredients);
 
-  const ingredientsTabSection = useRef();
+  const ingredientsTabSection = useRef<HTMLDivElement>(null);
 
 
   const [refBun, inViewBun] = useInView({
     threshold: 0,
-    root: ingredientsTabSection.currentTab,
+    root: ingredientsTabSection.current,
   });
 
   const [refSauce, inViewSauce] = useInView({
     threshold: 0.25,
     rootMargin: "-300px",
-    root: ingredientsTabSection.currentTab,
+    root: ingredientsTabSection.current,
   });
 
   const [refMain, inViewMain] = useInView({
     threshold: 0.25,
-    root: ingredientsTabSection.currentTab,
+    root: ingredientsTabSection.current,
   });
 
   useEffect(() => {
@@ -55,21 +56,21 @@ function BurgerIngredients() {
             <IngredientsGroup
               type={BUN}
               title={`Булки`}
-              data={ingredients.filter((e) => e.type === BUN)}
+              data={ingredients.filter((e: IIngredients) => e.type === BUN)}
             />
           </div>
           <div ref={refSauce}>
             <IngredientsGroup
               type={SAUCE}
               title={`Соусы`}
-              data={ingredients.filter((e) => e.type === SAUCE)}
+              data={ingredients.filter((e: IIngredients) => e.type === SAUCE)}
             />
           </div>
           <div ref={refMain}>
             <IngredientsGroup
               type={MAIN}
               title={`Начинки`}
-              data={ingredients.filter((e) => e.type === MAIN)}
+              data={ingredients.filter((e: IIngredients) => e.type === MAIN)}
             />
           </div>
         </div>

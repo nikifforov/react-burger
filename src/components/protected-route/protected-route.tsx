@@ -1,13 +1,21 @@
 import React from 'react';
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Preloader from "../preloader/preloader";
+import {useAppSelector} from "../../hooks/hooks";
+
+interface IProtectedRoute {
+  onlyNotAuth?: boolean;
+  component: JSX.Element;
+}
 
 
 
-function ProtectedRoute ( { onlyNotAuth = false, component } ) {
-  const { isAuthChecked, user } = useSelector(store => store.auth);
+function ProtectedRoute ( props: IProtectedRoute ) {
+
+  const { onlyNotAuth = false, component } = props;
+
+  const { isAuthChecked, user } = useAppSelector(store => store.auth);
   const location = useLocation();
 
   if ( !isAuthChecked ) {
@@ -27,7 +35,7 @@ function ProtectedRoute ( { onlyNotAuth = false, component } ) {
 }
 
 export const OnlyAuth = ProtectedRoute;
-export const OnlyNotAuth = ({ component }) => (
+export const OnlyNotAuth = ({ component }: IProtectedRoute) => (
   <ProtectedRoute onlyNotAuth={true} component={component} />
 );
 

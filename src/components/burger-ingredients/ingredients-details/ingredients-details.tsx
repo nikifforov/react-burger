@@ -1,16 +1,21 @@
 import { useMemo } from 'react';
 import styles from "./ingredients-details.module.sass"
 import { useParams } from "react-router-dom";
-import PropTypes from "prop-types";
-import { ingredientsProtoTypes } from "../../../utils/types";
+import {IIngredients} from "../../../utils/types";
 
+interface IIngredientsDetails {
+  isLoading: boolean;
+  ingredients: IIngredients[];
+}
 
-function IngredientsDetails ({ isLoading, ingredients }) {
+function IngredientsDetails (props: IIngredientsDetails) {
+
+  const { isLoading, ingredients } = props;
 
   const { id } = useParams();
 
-  const ingredientItem = useMemo(() => {
-    return ingredients.find((item) => item._id === id);
+  const ingredientItem: IIngredients | undefined = useMemo(() => {
+    return ingredients.find((item: IIngredients) => item._id === id);
   }, [ingredients, id]);
 
   if (!ingredients) {
@@ -51,11 +56,5 @@ function IngredientsDetails ({ isLoading, ingredients }) {
 
   );
 }
-
-IngredientsDetails.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientsProtoTypes.isRequired).isRequired
-}
-
 
 export default IngredientsDetails;

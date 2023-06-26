@@ -1,11 +1,18 @@
 import React from 'react';
 import styles from "./ingredients.module.sass"
-import PropTypes from 'prop-types';
+
 import Preloader from "../../components/preloader/preloader";
 import IngredientsDetails from "../../components/burger-ingredients/ingredients-details/ingredients-details";
-import { ingredientsProtoTypes } from "../../utils/types";
+import { IIngredients } from "../../utils/types";
 
-function Ingredients ( { isLoading, ingredients } ) {
+interface IIngredient {
+  isLoading: boolean;
+  ingredients: IIngredients[]
+}
+
+function Ingredients ( props: IIngredient ) {
+
+  const { isLoading, ingredients } = props;
   return (
     <div className={styles.ingredients}>
       { isLoading
@@ -23,10 +30,5 @@ function Ingredients ( { isLoading, ingredients } ) {
     </div>
   );
 }
-
-Ingredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsProtoTypes.isRequired).isRequired,
-  isLoading: PropTypes.bool.isRequired
-};
 
 export default Ingredients;
