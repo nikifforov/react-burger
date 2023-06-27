@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from "./order-details.module.sass"
 import doneImg from "../../images/done.png";
-import { useSelector } from "react-redux";
-
+import {useAppSelector} from "../../hooks/hooks";
 
 
 function OrderDetails () {
-  const orderNumber = useSelector(store => store.orderDetails.order.number)
+  const orderNumber = useAppSelector(store => store.orderDetails.order.number)
 
   return (
     <div className={`mt-20 mr-15 mb-15 ml-15 ${styles.orderDetails}`}>

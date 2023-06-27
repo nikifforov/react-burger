@@ -1,19 +1,25 @@
 import React from 'react';
 import styles from "./constructor-total.module.sass"
 import { Button, CurrencyIcon } from  "@ya.praktikum/react-developer-burger-ui-components"
-import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
 import { orderCheckout } from "../../../services/actions/order-details-actions";
 import { useNavigate } from "react-router-dom";
 import { burgerConstructorAllClear } from "../../../services/actions/burget-constructor-actions";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+
+interface IConstructorTotal {
+  orderIngredients: string[];
+  totalPrice: number
+}
 
 
-function ConstructorTotal({ orderIngredients, totalPrice}) {
+function ConstructorTotal( props: IConstructorTotal ) {
 
-  const { bun, ingredients } = useSelector(store => store.burgerConstructor);
-  const { user } = useSelector(store => store.auth);
+  const { orderIngredients, totalPrice} = props;
 
-  const dispatch = useDispatch();
+  const { bun, ingredients } = useAppSelector(store => store.burgerConstructor);
+  const { user } = useAppSelector(store => store.auth);
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleCheckout = () => {
@@ -37,16 +43,12 @@ function ConstructorTotal({ orderIngredients, totalPrice}) {
         type="primary"
         size="large"
         onClick={handleCheckout}
-        disabled={ bun !== null && ingredients.length !== 0 ? "" : "disabled" }
+        //@ts-ignore
+        disabled={ //@ts-ignore
+        bun !== null && ingredients.length !== 0 ? "" : "disabled" }
       >Оформить заказ</Button>
     </div>
   );
-}
-
-
-ConstructorTotal.propTypes = {
-  orderIngredients: PropTypes.array.isRequired,
-  totalPrice: PropTypes.number.isRequired
 }
 
 export default ConstructorTotal;

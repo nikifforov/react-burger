@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, FormEvent } from 'react';
 import styles from "./login.module.sass"
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { sendLogin } from "../../services/actions/auth-actions";
 import useCustomForm  from "../../hooks/useCustomForm";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 const Login = () => {
 
-  const authError =  useSelector((store) => store.auth.hasError)
-  const dispatch = useDispatch();
+  const authError =  useAppSelector((store) => store.auth.hasError)
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { values, handleChange } = useCustomForm({
@@ -18,7 +18,7 @@ const Login = () => {
   });
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch(sendLogin(values));
       if (!authError) {

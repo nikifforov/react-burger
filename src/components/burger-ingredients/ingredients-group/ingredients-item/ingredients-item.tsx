@@ -1,20 +1,25 @@
 import React, {useMemo} from 'react';
 import styles from "./ingredients-item.module.sass"
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import { ingredientsProtoTypes } from "../../../../utils/types"
-import { useDispatch, useSelector } from "react-redux";
+import {IIngredients} from "../../../../utils/types"
 import { useDrag } from "react-dnd"
 import { addIngredientDetails } from "../../../../services/actions/ingredient-details-actions";
 import { BUN } from "../../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
 
-function IngredientsItem({ ingredient }) {
-  const dispatch = useDispatch();
-  const burgerConstructor = useSelector(store => store.burgerConstructor)
+interface IIngredientItem {
+  ingredient: IIngredients;
+}
+
+function IngredientsItem(props: IIngredientItem) {
+  const { ingredient } = props;
+  const dispatch = useAppDispatch();
+  const burgerConstructor = useAppSelector(store => store.burgerConstructor)
 
   const location = useLocation();
 
-  const handleClick = (ingredient) => {
+  const handleClick = (ingredient: IIngredients): void => {
     dispatch(addIngredientDetails(ingredient));
   }
 
@@ -27,14 +32,18 @@ function IngredientsItem({ ingredient }) {
   })
 
   const countBun = useMemo( () => {
+    //@ts-ignore
     if ( burgerConstructor.bun !== null ) {
+      //@ts-ignore
       return burgerConstructor.bun._id === ingredient._id ? 2 : 0
     }
   }, [burgerConstructor, ingredient._id] );
 
   const countIngredient = useMemo( () => {
+    //@ts-ignore
     if ( burgerConstructor.ingredients.length !== 0 ) {
-      const burgerConstructorIngredientsFilter = burgerConstructor.ingredients.filter((item) => item._id === ingredient._id)
+      //@ts-ignore
+      const burgerConstructorIngredientsFilter = burgerConstructor.ingredients.filter((item: IIngredients) => item._id === ingredient._id)
       return burgerConstructorIngredientsFilter.length
     }
 
@@ -73,10 +82,6 @@ function IngredientsItem({ ingredient }) {
   );
 
 
-}
-
-IngredientsItem.propTypes = {
-  ingredient: ingredientsProtoTypes.isRequired,
 }
 
 export default IngredientsItem;

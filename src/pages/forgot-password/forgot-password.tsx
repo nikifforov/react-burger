@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, FormEvent } from 'react';
 import styles from "./forgot-password.module.sass"
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -8,13 +8,13 @@ import useCustomForm  from "../../hooks/useCustomForm"
 const ForgotPassword = () => {
 
   const { values, handleChange } = useCustomForm({ email: "" });
-  const [ error, setError ] = useState( null );
+  const [ error, setError ] = useState<string | null>( null );
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if ( values.email !== "" && values.email.length > 0 ) {
         forgotPassword(values)

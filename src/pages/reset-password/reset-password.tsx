@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, {useCallback, useState, useEffect, FormEvent} from 'react';
 import styles from "./reset-password.module.sass"
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import useCustomForm  from "../../hooks/useCustomForm";
 const ResetPassword = () => {
 
   const { values, handleChange } = useCustomForm({ password: "", token: "" });
-  const [ message, setMessage ] = useState( null );
+  const [ message, setMessage ] = useState<string| null>( null );
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,7 +22,7 @@ const ResetPassword = () => {
 
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if ( values.password !== "" && values.password.length > 0 && values.token !== "" && values.token.length > 0 ) {
         resetPassword(values)

@@ -11,18 +11,23 @@ export const FORGOT_PASSWORD_URL = `${BASE_URL}/password-reset`;
 export const RESET_PASSWORD_URL = `${BASE_URL}/password-reset/reset`;
 
 
-function checkResponse(res) {
+interface IValue {
+  [name: string]: string;
+}
+
+
+function checkResponse(res: Response) {
   if ( res.ok ) {
     return res.json();
   }
   return Promise.reject(res.status)
 }
 
-export function request(url, options) {
+export function request(url: string, options: RequestInit ) {
   return fetch(url, options).then(checkResponse)
 }
 
-export const registration = (values) => {
+export const registration = (values: IValue) => {
   return request(REGISTRATION_URL, {
     method: "POST",
     headers: {
@@ -32,7 +37,7 @@ export const registration = (values) => {
   })
 }
 
-export const login = (values) => {
+export const login = (values: IValue) => {
   return request(LOGIN_URL, {
     method: "POST",
     headers: {
@@ -43,7 +48,7 @@ export const login = (values) => {
 }
 
 
-export const forgotPassword = (values) => {
+export const forgotPassword = (values: IValue) => {
   return request(FORGOT_PASSWORD_URL, {
     method: "POST",
     headers: {
@@ -53,7 +58,7 @@ export const forgotPassword = (values) => {
   })
 }
 
-export const resetPassword = (values) => {
+export const resetPassword = (values: IValue) => {
   return request(RESET_PASSWORD_URL, {
     method: "POST",
     headers: {
@@ -74,7 +79,7 @@ export const refreshToken = () => {
   })
 }
 
-export const requestWithRefresh = async (url, options) => {
+export const requestWithRefresh = async(url: string, options: any) => {
   try {
     return await request(url, options)
   } catch (error) {
@@ -96,7 +101,7 @@ export const requestWithRefresh = async (url, options) => {
 }
 
 
-export const updateUser = (values) => {
+export const updateUser = (values: IValue) => {
   return requestWithRefresh(USER_URL, {
     method: "PATCH",
     headers: {
