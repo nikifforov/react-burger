@@ -5,17 +5,30 @@ import {
   BURGER_CONSTRUCTOR_REMOVE_INGREDIENT,
   BURGER_CONSTRUCTOR_ALL_CLEAR,
   BURGER_CONSTRUCTOR_FAILED,
-  BURGER_CONSTRUCTOR_SORT_INGREDIENT
+  BURGER_CONSTRUCTOR_SORT_INGREDIENT,
+  TBurgerConstructor
 } from "../actions/burget-constructor-actions"
+import { IIngredients } from "../../utils/types"
 
-const initialState = {
+interface IIngredientsUuid extends IIngredients {
+  uuid: string
+}
+
+type TInitialState = {
+  isLoading: boolean,
+  hasError: boolean,
+  ingredients: IIngredientsUuid[],
+  bun: IIngredients | null
+}
+
+const initialState: TInitialState = {
   isLoading: false,
   hasError: false,
-  ingredients: [],
+  ingredients: [] as IIngredientsUuid[],
   bun: null
 }
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (state = initialState, action: TBurgerConstructor): TInitialState => {
   switch (action.type ) {
     case BURGER_CONSTRUCTOR_REQUEST: {
       return {

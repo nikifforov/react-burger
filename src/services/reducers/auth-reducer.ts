@@ -15,17 +15,26 @@ import {
   UPDATE_USER_FAILED,
   AUTH_LOGOUT_REQUEST,
   AUTH_LOGOUT_SUCCESS,
-  AUTH_LOGOUT_FAILED
+  AUTH_LOGOUT_FAILED,
+  TAuthActions,
 } from "../actions/auth-actions"
+import {IUser} from "../../utils/types";
 
-const initialState = {
+type TInitialState = {
+  user: IUser | null;
+  isLoading: boolean;
+  hasError: boolean;
+  isAuthChecked: boolean;
+}
+
+const initialState: TInitialState = {
   user: null,
   isLoading: false,
   hasError: false,
   isAuthChecked: false,
 }
 
-export const authRegistrationReducer = (state = initialState, action) => {
+export const authRegistrationReducer = (state = initialState, action: TAuthActions): TInitialState => {
   switch ( action.type ) {
     case AUTH_REGISTRATION_REQUEST: {
       return {

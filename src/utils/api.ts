@@ -1,5 +1,6 @@
-export const BASE_URL = "https://norma.nomoreparties.space/api";
+import {IRegistrationForm, ILogin, IForgotPassword, IResetPassword, IUpdateUsers} from "./types"
 
+export const BASE_URL = "https://norma.nomoreparties.space/api";
 export const GET_INGREDIENTS_URL = `${BASE_URL}/ingredients`;
 export const CHECKOUT_ORDER_URL = `${BASE_URL}/orders`;
 export const REGISTRATION_URL = `${BASE_URL}/auth/register`;
@@ -10,10 +11,15 @@ export const USER_URL = `${BASE_URL}/auth/user`;
 export const FORGOT_PASSWORD_URL = `${BASE_URL}/password-reset`;
 export const RESET_PASSWORD_URL = `${BASE_URL}/password-reset/reset`;
 
+export const WS_URL = "wss://norma.nomoreparties.space/orders";
 
-interface IValue {
-  [name: string]: string;
-}
+
+// export interface IValue {
+//   [name: string]: string;
+// }
+
+
+
 
 
 function checkResponse(res: Response) {
@@ -23,11 +29,11 @@ function checkResponse(res: Response) {
   return Promise.reject(res.status)
 }
 
-export function request(url: string, options: RequestInit ) {
+export function request(url: string, options?: RequestInit ) {
   return fetch(url, options).then(checkResponse)
 }
 
-export const registration = (values: IValue) => {
+export const registration = (values: IRegistrationForm) => {
   return request(REGISTRATION_URL, {
     method: "POST",
     headers: {
@@ -37,7 +43,7 @@ export const registration = (values: IValue) => {
   })
 }
 
-export const login = (values: IValue) => {
+export const login = (values: ILogin) => {
   return request(LOGIN_URL, {
     method: "POST",
     headers: {
@@ -48,7 +54,7 @@ export const login = (values: IValue) => {
 }
 
 
-export const forgotPassword = (values: IValue) => {
+export const forgotPassword = (values: IForgotPassword) => {
   return request(FORGOT_PASSWORD_URL, {
     method: "POST",
     headers: {
@@ -58,7 +64,7 @@ export const forgotPassword = (values: IValue) => {
   })
 }
 
-export const resetPassword = (values: IValue) => {
+export const resetPassword = (values: IResetPassword) => {
   return request(RESET_PASSWORD_URL, {
     method: "POST",
     headers: {
@@ -101,7 +107,7 @@ export const requestWithRefresh = async(url: string, options: any) => {
 }
 
 
-export const updateUser = (values: IValue) => {
+export const updateUser = (values: IUpdateUsers) => {
   return requestWithRefresh(USER_URL, {
     method: "PATCH",
     headers: {
@@ -131,6 +137,5 @@ export const logout = () => {
     body: JSON.stringify({token: localStorage.getItem("refreshToken")})
   })
 }
-
 
 

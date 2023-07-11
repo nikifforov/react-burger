@@ -15,11 +15,12 @@ import { OnlyAuth, OnlyNotAuth } from "../protected-route/protected-route";
 import IngredientsDetails from "../burger-ingredients/ingredients-details/ingredients-details";
 import Modal from "../modal/modal";
 import Ingredients from "../../pages/ingredients/ingredients";
-import ProfileOrderHistory from "../profile-order-history/profile-order-history"
-import OrderFeed from "../../pages/order-feed/order-feed";
-import { removeIngredientDetails } from "../../services/actions/ingredient-details-actions";
+import ProfileOrders from "../profile-order/profile-orders"
+import Feed from "../../pages/feed/feed";
+// import { removeIngredientDetails } from "../../services/actions/ingredient-details-actions";
 import {IIngredients} from "../../utils/types";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import OrderPage from "../order-page/order-page";
 
 
 function App() {
@@ -34,8 +35,9 @@ function App() {
   }, [dispatch] );
 
   const closeModalIngredient = () => {
-    dispatch(removeIngredientDetails())
-    navigate("/", { replace: true });
+    //dispatch(removeIngredientDetails())
+    //navigate("/", { replace: true });
+    navigate(-1);
   }
 
   const location = useLocation();
@@ -51,53 +53,29 @@ function App() {
           <AppHeader/>
 
           <Routes location={state || location}>
-            <Route
-              path="/"
-              element={<Main/>}
-            />
+            <Route path="/" element={<Main/>} />
 
-            <Route
-              path="/login"
-              element={<OnlyNotAuth component={<Login/>}/>}
-            />
+            <Route path="/login" element={<OnlyNotAuth component={<Login/>}/>} />
 
-            <Route
-              path="/register"
-              element={<OnlyNotAuth component={<Register/>}/>}
-            />
+            <Route path="/register" element={<OnlyNotAuth component={<Register/>}/>} />
 
-            <Route
-              path="/forgot-password"
-              element={<OnlyNotAuth component={<ForgotPassword/>}/>}
-            />
+            <Route path="/forgot-password" element={<OnlyNotAuth component={<ForgotPassword/>}/>} />
 
-            <Route
-              path="/reset-password"
-              element={<OnlyNotAuth component={<ResetPassword/>}/>}
-            />
+            <Route path="/reset-password" element={<OnlyNotAuth component={<ResetPassword/>}/>} />
 
-            <Route
-              path="/profile"
-              element={<OnlyAuth component={<Profile/>}/>}>
-              <Route
-                index
-                element={<ProfileForm/>}
-              />
-              <Route
-                path="/profile/orders"
-                element={<ProfileOrderHistory/>}
-              />
+            <Route path="/profile" element={<OnlyAuth component={<Profile/>}/>}>
+
+              <Route index element={<ProfileForm/>} />
+              <Route path="/profile/orders" element={<ProfileOrders/>} />
+
             </Route>
 
-            <Route
-              path="/order-feed"
-              element={<OrderFeed/>}
-            />
+            <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderPage/>}/>} />
 
-            <Route
-              path="/ingredients/:id"
-              element={<Ingredients ingredients={ingredients} isLoading={isLoading}/>}
-            />
+            <Route path="/feed" element={<Feed/>} />
+            <Route path="/feed/:id" element={<OrderPage />} />
+
+            <Route path="/ingredients/:id" element={<Ingredients ingredients={ingredients} isLoading={isLoading}/>} />
 
           </Routes>
 
@@ -112,6 +90,22 @@ function App() {
             element={
               <Modal title={"Детали ингредиента"} closeModal={closeModalIngredient}>
                 <IngredientsDetails ingredients={ingredients} isLoading={isLoading}/>
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal closeModal={closeModalIngredient}>
+                <OrderPage/>
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal closeModal={closeModalIngredient}>
+                <OrderPage/>
               </Modal>
             }
           />

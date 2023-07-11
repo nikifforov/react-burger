@@ -19,7 +19,7 @@ function AppHeader() {
           </NavLink>
 
           <NavLink
-            to="/order-feed"
+            to="/feed"
             className={({ isActive }) =>
               isActive ? styles.buttonActive : styles.buttonDisable
             }

@@ -1,7 +1,12 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import {
+  // eslint-disable-next-line import/named
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook,
+} from "react-redux";
 
 import { AppDispatch, RootState } from "../index";
+import type {} from "redux-thunk/extend-redux";
 
-type DispatchFunc = () => AppDispatch;
-export const useAppDispatch: DispatchFunc = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch: () => AppDispatch = dispatchHook;
+export const useAppSelector: TypedUseSelectorHook<RootState> = selectorHook;
