@@ -18,8 +18,4 @@ const Main = () => {
   );
 };
 
-Main.propTypes = {
-
-};
-
 export default Main;

@@ -19,14 +19,11 @@ function BurgerConstructor() {
   const orderIngredients = useMemo( () => {
     let orderArr = [];
 
-    //@ts-ignore
+
     if ( burgerConstructor.bun ) {
-      //@ts-ignore
       orderArr.push(burgerConstructor.bun._id)
     }
-    //@ts-ignore
     if ( burgerConstructor.ingredients.length !== 0 ) {
-      //@ts-ignore
       burgerConstructor.ingredients.forEach((item) => {
         orderArr.push(item._id)
       })
@@ -38,15 +35,11 @@ function BurgerConstructor() {
 
   const totalPrice = useMemo(() => {
     let price = 0
-    //@ts-ignore
     if ( burgerConstructor.bun ) {
-      //@ts-ignore
       price += burgerConstructor.bun.price * 2
     }
 
-    //@ts-ignore
     if ( burgerConstructor.ingredients.length !== 0 ) {
-      //@ts-ignore
       price += burgerConstructor.ingredients.reduce((sum, val) => sum + val.price, 0)
     }
     return price
@@ -62,7 +55,7 @@ function BurgerConstructor() {
     <>
       {orderDetails.isLoading && <Preloader/>}
 
-      {orderDetails.order !== null &&
+      {orderDetails.order !== null && orderDetails.order.success &&
         <Modal closeModal={closeModal}>
           <OrderDetails />
         </Modal>

@@ -1,16 +1,25 @@
 import {
   GET_BURGER_INGREDIENTS_REQUEST,
   GET_BURGER_INGREDIENTS_SUCCESS,
-  GET_BURGER_INGREDIENTS_FAILED
+  GET_BURGER_INGREDIENTS_FAILED,
+  TGetBurgerIngredients,
 } from "../actions/get-burger-ingredients-actions";
+import {IIngredients} from "../../utils/types";
 
-const initialState = {
+
+type TInitialState = {
+  ingredients: IIngredients[] | [],
+  isLoading: boolean,
+  hasError: boolean
+}
+
+const initialState: TInitialState = {
   ingredients: [],
   isLoading: false,
   hasError: false
 };
 
-export const getBurgerIngredientsReducer = (state = initialState, action) => {
+export const getBurgerIngredientsReducer = (state = initialState, action: TGetBurgerIngredients): TInitialState => {
   switch ( action.type ) {
     case GET_BURGER_INGREDIENTS_REQUEST: {
       return {

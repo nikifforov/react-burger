@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate, useLocation } from "react-router-dom";
-import PropTypes from 'prop-types';
 import Preloader from "../preloader/preloader";
 import {useAppSelector} from "../../hooks/hooks";
 
@@ -38,10 +37,3 @@ export const OnlyAuth = ProtectedRoute;
 export const OnlyNotAuth = ({ component }: IProtectedRoute) => (
   <ProtectedRoute onlyNotAuth={true} component={component} />
 );
-
-ProtectedRoute.propTypes = {
-  onlyNotAuth: PropTypes.bool,
-  component: PropTypes.node,
-};
-
-export default ProtectedRoute;

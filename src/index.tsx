@@ -6,7 +6,14 @@ import { Provider } from "react-redux";
 import './index.sass';
 import App from './components/app/app';
 import { rootReducer } from "./services/reducers";
-import thunk from "redux-thunk"
+import thunk, { ThunkAction } from "redux-thunk"
+import {TAuthActions} from "./services/actions/auth-actions";
+import {TBurgerConstructor} from "./services/actions/burget-constructor-actions";
+import {TGetBurgerIngredients} from "./services/actions/get-burger-ingredients-actions";
+import {TIngredientDetails} from "./services/actions/ingredient-details-actions";
+import {TOrderDetails} from "./services/actions/order-details-actions";
+import {socketFeedActions, socketFeedOrdersActions, TWsConnectActions} from "./services/actions/socket-actions";
+import socketMiddleware from "./services/middleware";
 
 declare global {
   interface Window {
@@ -16,7 +23,13 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(
+  applyMiddleware(
+    thunk,
+    socketMiddleware(socketFeedActions),
+    socketMiddleware(socketFeedOrdersActions)
+  )
+);
 
 const store = createStore(rootReducer, enhancer)
 
@@ -35,5 +48,20 @@ root.render(
 );
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = typeof store.dispatch;
+export type AppActions =
+  | TAuthActions
+  | TBurgerConstructor
+  | TIngredientDetails
+  | TGetBurgerIngredients
+  | TOrderDetails
+  | TWsConnectActions
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  AppActions
+>;
+export type AppDispatch<TReturnType = void> = (
+  action: AppActions | AppThunk<TReturnType>
+) => TReturnType;
 

@@ -2,16 +2,24 @@ import {
   INGREDIENT_DETAILS_REQUEST,
   INGREDIENT_DETAILS_ADD,
   INGREDIENT_DETAILS_FAILED,
-  INGREDIENT_DETAILS_REMOVE
+  INGREDIENT_DETAILS_REMOVE,
+  TIngredientDetails
 } from  "../actions/ingredient-details-actions";
+import {IIngredients} from "../../utils/types";
 
-const initialState = {
+type TInitialState = {
+  isLoading: boolean,
+  hasError: boolean,
+  ingredient: IIngredients | null
+}
+
+const initialState: TInitialState = {
   isLoading: false,
   hasError: false,
   ingredient: null
 };
 
-export const ingredientDetailsReducer = ( store = initialState, action ) => {
+export const ingredientDetailsReducer = ( store = initialState, action: TIngredientDetails ): TInitialState => {
   switch (action.type ) {
     case INGREDIENT_DETAILS_REQUEST: {
       return {

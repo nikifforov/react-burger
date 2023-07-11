@@ -32,17 +32,17 @@ function IngredientsItem(props: IIngredientItem) {
   })
 
   const countBun = useMemo( () => {
-    //@ts-ignore
+
     if ( burgerConstructor.bun !== null ) {
-      //@ts-ignore
+
       return burgerConstructor.bun._id === ingredient._id ? 2 : 0
     }
   }, [burgerConstructor, ingredient._id] );
 
   const countIngredient = useMemo( () => {
-    //@ts-ignore
+
     if ( burgerConstructor.ingredients.length !== 0 ) {
-      //@ts-ignore
+
       const burgerConstructorIngredientsFilter = burgerConstructor.ingredients.filter((item: IIngredients) => item._id === ingredient._id)
       return burgerConstructorIngredientsFilter.length
     }
@@ -71,7 +71,7 @@ function IngredientsItem(props: IIngredientItem) {
           </div>
           <p className={`text text_type_main-default ${styles.ingredientsItem__name}`}>{ingredient.name}</p>
           <div>
-            {count > 0 &&
+            {count !== undefined &&
               <Counter count={count} size="default" extraClass="m-1"/>
             }
 

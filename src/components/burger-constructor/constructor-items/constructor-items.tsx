@@ -22,10 +22,9 @@ function ConstructorItems() {
   const burgerConstructor = useAppSelector(store => store.burgerConstructor)
   const dispatch = useAppDispatch();
 
-  const [{isHover} , dropTargetRef ] = useDrop({
+  const [{isHover} , dropTargetRef ] = useDrop<IIngredients, void, { isHover: boolean | null }>({
     accept: "ingredient",
     drop(ingredient) {
-      //@ts-ignore
       ingredient.type === BUN
         ? dispatch(burgerConstructorAddBun(ingredient))
         : dispatch(burgerConstructorAddIngredient(ingredient, uuidv4()))
@@ -38,31 +37,28 @@ function ConstructorItems() {
   return (
 
     <div className={`mb-10  ${styles.constructorItems} ${isHover ? styles.constructorItems__dropHover : ""}`} ref={dropTargetRef}>
-      { //@ts-ignore
+      {
         burgerConstructor.bun !== null
       ?
         <ConstructorElement
           extraClass={`ml-8 mr-4`}
           type="top"
           isLocked={true}
-          text={ //@ts-ignore
-          `${burgerConstructor.bun.name} (верх)`}
-          price={//@ts-ignore
-          burgerConstructor.bun.price}
-          thumbnail={//@ts-ignore
-          burgerConstructor.bun.image}/>
+          text={`${burgerConstructor.bun.name} (верх)`}
+          price={burgerConstructor.bun.price}
+          thumbnail={burgerConstructor.bun.image}/>
       :
         <div className={`${styles.constructorItems__bunEmpty } ${styles.constructorItems__bunEmpty_top} ml-8 mr-4`}>
           <p>Перетащи сюда булку</p>
         </div>
       }
 
-      { //@ts-ignore
+      {
         burgerConstructor.ingredients.length !== 0
       ?
         <div className={`custom-scroll ${styles.constructorItems__scroll}`}>
 
-          { //@ts-ignore
+          {
             burgerConstructor.ingredients.map((item: IIngredientAdditional, index: number) => {
             return (
               <ConstructorItem
@@ -81,18 +77,15 @@ function ConstructorItems() {
       }
 
 
-      { //@ts-ignore
+      {
         burgerConstructor.bun !== null
       ?
         <ConstructorElement
           extraClass={`ml-8 mr-4`}
           type="bottom"
           isLocked={true}
-          //@ts-ignore
           text={`${burgerConstructor.bun.name} (низ)`}
-          //@ts-ignore
           price={burgerConstructor.bun.price}
-          //@ts-ignore
           thumbnail={burgerConstructor.bun.image}/>
       :
         <div className={`${styles.constructorItems__bunEmpty } ${styles.constructorItems__bunEmpty_bottom} ml-8 mr-4`}>

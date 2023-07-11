@@ -12,16 +12,12 @@ function ProfileForm () {
   const dispatch = useAppDispatch();
 
   const defaultValues = {
-    name: user.name,
-    email: user.email,
+    name: user?.name || "",
+    email: user?.email || "",
     password: "**********"
   }
 
-  const { values, setValues, handleChange } = useCustomForm({
-    name: user.name,
-    email: user.email,
-    password: "**********"
-  });
+  const { values, setValues, handleChange } = useCustomForm(defaultValues);
 
   const handleReset = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -57,8 +53,8 @@ function ProfileForm () {
         value={values.password}
         name={'password'}
       />
-      {(values.name !== user.name ||
-        values.email !== user.email ||
+      {(values.name !== user?.name ||
+        values.email !== user?.email ||
         (values.password !== "**********" && values.password.length > 0)) && (
         <div className={`mt-6 $`}>
           <Button
