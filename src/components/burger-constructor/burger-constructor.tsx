@@ -17,7 +17,7 @@ function BurgerConstructor() {
   const orderDetails = useAppSelector(store => store.orderDetails);
 
   const orderIngredients = useMemo( () => {
-    let orderArr = [];
+    const orderArr = [];
 
 
     if ( burgerConstructor.bun ) {
@@ -61,7 +61,7 @@ function BurgerConstructor() {
         </Modal>
       }
 
-      <section className={`mt-25 pl-4 ${styles.burgerConstructor}`}>
+      <section className={`mt-25 pl-4 ${styles.burgerConstructor}`} data-test="burger-constructor">
         <ConstructorItems />
         <ConstructorTotal totalPrice={totalPrice} orderIngredients={orderIngredients} />
       </section>

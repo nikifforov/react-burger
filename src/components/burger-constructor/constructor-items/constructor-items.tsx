@@ -36,7 +36,7 @@ function ConstructorItems() {
 
   return (
 
-    <div className={`mb-10  ${styles.constructorItems} ${isHover ? styles.constructorItems__dropHover : ""}`} ref={dropTargetRef}>
+    <div className={`mb-10  ${styles.constructorItems} ${isHover ? styles.constructorItems__dropHover : ""}`} ref={dropTargetRef} data-test="drop-area">
       {
         burgerConstructor.bun !== null
       ?
@@ -46,7 +46,9 @@ function ConstructorItems() {
           isLocked={true}
           text={`${burgerConstructor.bun.name} (верх)`}
           price={burgerConstructor.bun.price}
-          thumbnail={burgerConstructor.bun.image}/>
+          thumbnail={burgerConstructor.bun.image}
+          data-test="bun-top"
+        />
       :
         <div className={`${styles.constructorItems__bunEmpty } ${styles.constructorItems__bunEmpty_top} ml-8 mr-4`}>
           <p>Перетащи сюда булку</p>
@@ -86,7 +88,9 @@ function ConstructorItems() {
           isLocked={true}
           text={`${burgerConstructor.bun.name} (низ)`}
           price={burgerConstructor.bun.price}
-          thumbnail={burgerConstructor.bun.image}/>
+          thumbnail={burgerConstructor.bun.image}
+          data-test="bun-bottom"
+        />
       :
         <div className={`${styles.constructorItems__bunEmpty } ${styles.constructorItems__bunEmpty_bottom} ml-8 mr-4`}>
           <p>Перетащи сюда булку</p>

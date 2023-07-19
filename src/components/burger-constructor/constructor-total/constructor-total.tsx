@@ -46,6 +46,7 @@ function ConstructorTotal( props: IConstructorTotal ) {
         //@ts-ignore
         disabled={ //@ts-ignore
         bun !== null && ingredients.length !== 0 ? "" : "disabled" }
+        data-test="order-button"
       >Оформить заказ</Button>
     </div>
   );

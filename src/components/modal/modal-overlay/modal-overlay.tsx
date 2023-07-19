@@ -17,7 +17,11 @@ function ModalOverlay (props: IModalOverlay) {
   }
 
   return (
-    <div className={styles.modalOverlay} onClick={handleClick}></div>
+    <div
+      className={styles.modalOverlay}
+      onClick={handleClick}
+      data-test="close-overlay"
+    ></div>
   );
 }
 

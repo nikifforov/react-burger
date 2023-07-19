@@ -20,7 +20,7 @@ type TInitialState = {
   hasError: boolean;
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isLoading: false,
   order: null,
   orderDetails: null,
@@ -75,7 +75,7 @@ export const orderDetailsReducer = (state = initialState, action: TOrderDetails)
         ...state,
         isLoading: false,
         orderDetails: null,
-        hasError: false,
+        hasError: true,
       }
     }
     default: {

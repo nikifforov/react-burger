@@ -21,7 +21,7 @@ type TInitialState = {
   bun: IIngredients | null
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isLoading: false,
   hasError: false,
   ingredients: [] as IIngredientsUuid[],

@@ -14,7 +14,7 @@ interface IInitialState {
   wsConnected: boolean;
 }
 
-const initialState: IInitialState = {
+export const initialState: IInitialState = {
   orders: [],
   wsConnected: false,
 };
