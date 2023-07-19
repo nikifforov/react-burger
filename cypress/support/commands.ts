@@ -1,3 +1,4 @@
+import { HOST_URL } from "../test-params";
 export {};
 /// <reference types="cypress" />
 // ***********************************************
@@ -44,7 +45,7 @@ Cypress.Commands.add("seedAndVisit", () => {
     fixture: "ingredients",
   });
   // @ts-ignore
-  cy.visit("/");
+  cy.visit(HOST_URL);
 });
 // @ts-ignore
 Cypress.Commands.add("setLocalStorage", () => {});

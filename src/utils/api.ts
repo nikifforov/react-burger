@@ -90,7 +90,6 @@ export const requestWithRefresh = async(url: string, options: any) => {
   try {
     return await request(url, options)
   } catch (error) {
-    console.log(typeof error);
     if ( error === 403 ) {
 
       const refreshTokenData = await refreshToken();

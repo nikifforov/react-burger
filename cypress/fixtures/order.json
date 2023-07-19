@@ -73,19 +73,6 @@
         "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
         "__v": 0
       }
-    ],
-    "_id": "645cbd208a4b62001c835efd",
-    "owner": {
-      "name": "Victor",
-      "email": "i@vik-ama.ru",
-      "createdAt": "2023-05-21T10:02:08.847Z",
-      "updatedAt": "2023-05-21T10:02:08.955Z"
-    },
-    "status": "done",
-    "name": "Нереально вкусный Space burger!",
-    "createdAt": "2023-05-21T10:02:08.965Z",
-    "updatedAt": "2023-05-21T10:02:08.975Z",
-    "number": 1234,
-    "price": 2056
+    ]
   }
 }

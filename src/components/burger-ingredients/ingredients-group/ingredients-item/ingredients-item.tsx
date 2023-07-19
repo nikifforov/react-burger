@@ -22,7 +22,7 @@ function IngredientsItem(props: IIngredientItem) {
   const handleClick = (ingredient: IIngredients): void => {
     dispatch(addIngredientDetails(ingredient));
   }
-
+// eslint-disable-next-line
   const [{isDrag}, dragRef] = useDrag({
     type: "ingredient",
     item: { ...ingredient } ,
