@@ -1,6 +1,6 @@
-export const BUN: string = "bun";
-export const SAUCE: string = "sauce";
-export const MAIN: string = "main";
-export const DONE: string = "done";
-export const PENDING: string = "pending";
-export const CREATED: string = "created";
+export const BUN = "bun";
+export const SAUCE= "sauce";
+export const MAIN= "main";
+export const DONE = "done";
+export const PENDING= "pending";
+export const CREATED = "created";

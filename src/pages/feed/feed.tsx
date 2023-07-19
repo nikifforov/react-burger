@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styles from "./feed.module.sass";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {WS_CONNECTION_END, WS_CONNECTION_START} from "../../services/actions/socket-actions";

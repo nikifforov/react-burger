@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styles from "./order-page.module.sass"
 import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
@@ -86,6 +86,7 @@ function OrderPage() {
   const countIngredients = useMemo(() => {
     const count = order.ingredients.reduce(
       (acc: { [a: string]: number }, i) => {
+        // eslint-disable-next-line no-prototype-builtins
         if (acc.hasOwnProperty(i)) {
           acc[i] += 1;
         } else {

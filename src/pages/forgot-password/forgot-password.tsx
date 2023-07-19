@@ -1,4 +1,4 @@
-import { useCallback, useState, FormEvent } from 'react';
+import React, { useCallback, useState, FormEvent } from 'react';
 import styles from "./forgot-password.module.sass"
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";

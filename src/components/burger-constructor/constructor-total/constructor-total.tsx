@@ -44,7 +44,7 @@ function ConstructorTotal( props: IConstructorTotal ) {
         size="large"
         onClick={handleCheckout}
         //@ts-ignore
-        disabled={ //@ts-ignore
+        disabled={
         bun !== null && ingredients.length !== 0 ? "" : "disabled" }
         data-test="order-button"
       >Оформить заказ</Button>

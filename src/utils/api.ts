@@ -29,6 +29,7 @@ function checkResponse(res: Response) {
   return Promise.reject(res.status)
 }
 
+// eslint-disable-next-line no-undef
 export function request(url: string, options?: RequestInit ) {
   return fetch(url, options).then(checkResponse)
 }

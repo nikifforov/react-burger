@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from "./ingredients-details.module.sass"
 import { useParams } from "react-router-dom";
 import {IIngredients} from "../../../utils/types";

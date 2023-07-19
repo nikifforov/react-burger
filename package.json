@@ -2,8 +2,8 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
-  "main": "src/index.tsx",
+  "homepage": "https://nikifforov.github.io/react-burger/",
+  "main": "./index.html",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
