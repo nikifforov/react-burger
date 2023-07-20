@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from "./burger-constructor.module.sass"
 import ConstructorItems from "./constructor-items/constructor-items";
 import ConstructorTotal from "./constructor-total/constructor-total";
@@ -17,7 +17,7 @@ function BurgerConstructor() {
   const orderDetails = useAppSelector(store => store.orderDetails);
 
   const orderIngredients = useMemo( () => {
-    let orderArr = [];
+    const orderArr = [];
 
 
     if ( burgerConstructor.bun ) {
@@ -61,7 +61,7 @@ function BurgerConstructor() {
         </Modal>
       }
 
-      <section className={`mt-25 pl-4 ${styles.burgerConstructor}`}>
+      <section className={`mt-25 pl-4 ${styles.burgerConstructor}`} data-test="burger-constructor">
         <ConstructorItems />
         <ConstructorTotal totalPrice={totalPrice} orderIngredients={orderIngredients} />
       </section>

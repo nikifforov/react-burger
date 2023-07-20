@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router } from "react-router-dom"
+import { HashRouter} from "react-router-dom"
 import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import './index.sass';
@@ -37,13 +37,13 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLBRElement
 );
 root.render(
-  <Router>
+  <HashRouter>
     <React.StrictMode>
       <Provider store={store}>
         <App />
       </Provider>
     </React.StrictMode>
-  </Router>
+  </HashRouter>
 
 );
 

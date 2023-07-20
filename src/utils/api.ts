@@ -29,6 +29,7 @@ function checkResponse(res: Response) {
   return Promise.reject(res.status)
 }
 
+// eslint-disable-next-line no-undef
 export function request(url: string, options?: RequestInit ) {
   return fetch(url, options).then(checkResponse)
 }
@@ -89,7 +90,6 @@ export const requestWithRefresh = async(url: string, options: any) => {
   try {
     return await request(url, options)
   } catch (error) {
-    console.log(typeof error);
     if ( error === 403 ) {
 
       const refreshTokenData = await refreshToken();

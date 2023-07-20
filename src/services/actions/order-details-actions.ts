@@ -109,7 +109,7 @@ export const orderCheckout = (order: string[]) => {
           payload: res
         })
       })
-      .catch((e) => {
+      .catch(() => {
         dispatch({
           type: ORDER_DETAILS_FAILED
         })

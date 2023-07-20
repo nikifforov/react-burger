@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import { createPortal } from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -6,7 +6,7 @@ import styles from  "./modal.module.sass"
 
 interface IModal {
   title?: string;
-  children: JSX.Element;
+  children: ReactNode;
   closeModal: () => void;
 }
 
@@ -34,9 +34,9 @@ function Modal ( props: IModal ) {
 
   return createPortal(
     <>
-      <div className={`pt-10 pb-15 pr-10 pl-10 ${styles.modal}`}>
+      <div className={`pt-10 pb-15 pr-10 pl-10 ${styles.modal}`} data-test="modal">
         <div className={styles.modal__container}>
-          <button className={styles.modal__button} onClick={closeModal}>
+          <button className={styles.modal__button} onClick={closeModal} data-test="button-close">
             <CloseIcon type="primary"/>
           </button>
           { title &&

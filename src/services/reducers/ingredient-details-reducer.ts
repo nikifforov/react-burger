@@ -13,7 +13,7 @@ type TInitialState = {
   ingredient: IIngredients | null
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isLoading: false,
   hasError: false,
   ingredient: null
